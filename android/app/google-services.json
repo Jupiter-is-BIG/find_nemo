@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "664366692520",
+    "project_id": "finding-nemo-6cfb3",
+    "storage_bucket": "finding-nemo-6cfb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664366692520:android:0612728f2b6527382bea9d",
+        "android_client_info": {
+          "package_name": "com.example.lost_child"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664366692520-fmn6sk8p4s54dni451dm1inhghe10hg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjpC1F3bQbNDzbquQREy0nKYvvRFsvTCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664366692520-fmn6sk8p4s54dni451dm1inhghe10hg1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,6 +7,8 @@ import '../LoggedInPage/user_page.dart';
 
 // This is our Sign Up page
 class SignUpForm extends StatefulWidget {
+  const SignUpForm({Key key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return SignUpFormState();
@@ -24,9 +26,9 @@ class SignUpFormState extends State<SignUpForm> {
 
   // Method to submit the data.
   void _submitSignUpData() {
-    final _isValid = _formKey.currentState.validate();
+    final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
-    if (_isValid) {
+    if (isValid) {
       _formKey.currentState.save();
       _submitAuthForm(
           _signUpName, _signUpPhone, _signUpEmailID.trim(), _signUpPassword);
@@ -45,8 +47,7 @@ class SignUpFormState extends State<SignUpForm> {
         _isLoading = true;
       });
 
-      AuthResult account;
-      account = await _auth.createUserWithEmailAndPassword(
+      await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
       await Firestore.instance.collection('Users').document(email).setData({
@@ -54,10 +55,10 @@ class SignUpFormState extends State<SignUpForm> {
         'Phone': phone,
         'email': email,
       });
-      AuthResult signInStatus;
-      signInStatus = await _auth.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
           email: email, password: password);
 
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
         return UserPage(email);
       }));

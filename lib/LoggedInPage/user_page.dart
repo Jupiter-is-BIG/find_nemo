@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+// ignore: library_prefixes
 import 'package:flutter_face_api/face_api.dart' as Regula;
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,8 +17,10 @@ import 'package:geolocator/geolocator.dart';
 // This is the code for the screen the user encounters after singing in his/her account.
 class UserPage extends StatefulWidget {
   final String id;
-  UserPage(@required this.id);
+  // ignore: invalid_required_positional_param
+  const UserPage(@required this.id, {Key key}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _UserPageState createState() => _UserPageState();
 }
 
@@ -54,6 +58,7 @@ class _UserPageState extends State<UserPage> {
       lati = _currentPosition.latitude;
       longi = _currentPosition.longitude;
     }).catchError((e) {
+      // ignore: avoid_print
       print(e);
     });
   }
@@ -88,7 +93,7 @@ class _UserPageState extends State<UserPage> {
     final imageRef = FirebaseStorage.instance
         .ref()
         .child('user_try_image_stock')
-        .child(widget.id + DateTime.now().toString() + '.jpg');
+        .child('${widget.id}${DateTime.now()}.jpg');
     await imageRef.putFile(_storedImage).onComplete;
 
     urlOfChildScannedFace = await imageRef.getDownloadURL();
@@ -137,6 +142,7 @@ class _UserPageState extends State<UserPage> {
                 emailOfPolice: foundChildDatabaseAfterScan['Police Email'],
                 phoneOfParent: foundChildDatabaseAfterScan['Parent Phone'],
                 addressOfParent: foundChildDatabaseAfterScan['Parent Address']);
+            // ignore: use_build_context_synchronously
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.green[200],
                 content:
@@ -175,7 +181,7 @@ class _UserPageState extends State<UserPage> {
     const templateId = 'template_md24rwc';
     const userId = 'CJIIIS2QfQbggLeyY';
     final urlEmail = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
-    final response = await http.post(urlEmail,
+    await http.post(urlEmail,
         headers: {
           'origin': 'http://localhost',
           'Content-Type': 'application/json'

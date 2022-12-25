@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +7,10 @@ import '../LoggedInPage/user_page.dart';
 
 // This is the Sign In page.
 class SignInPage extends StatefulWidget {
+  const SignInPage({Key key}) : super(key: key);
+
   @override
+  // ignore: library_private_types_in_public_api
   _SignInPageState createState() => _SignInPageState();
 }
 
@@ -26,10 +28,10 @@ class _SignInPageState extends State<SignInPage> {
       setState(() {
         _isLoading = true;
       });
-      AuthResult authVali;
-      authVali = await _auth.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
           email: email, password: password);
 
+      // ignore: use_build_context_synchronously
       Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
         return UserPage(email);
       }));

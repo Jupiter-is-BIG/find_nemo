@@ -4,6 +4,10 @@ import './police_upload.dart';
 
 // This is the police authentication page.
 class SecurityKey extends StatefulWidget {
+  const SecurityKey({Key key}) : super(key: key);
+
+  @override
+  // ignore: library_private_types_in_public_api
   _SecurityKeyState createState() => _SecurityKeyState();
 }
 
@@ -20,6 +24,7 @@ class _SecurityKeyState extends State<SecurityKey> {
   }
 
   // The main build function for the current StatefulWidget.
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -64,7 +69,7 @@ class _SecurityKeyState extends State<SecurityKey> {
                                       // Navigation to the police interface after authentication.
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(builder: (_) {
-                                        return PoliceUpload();
+                                        return const PoliceUpload();
                                       }));
                                     } else {
                                       ScaffoldMessenger.of(context)

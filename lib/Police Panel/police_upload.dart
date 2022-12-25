@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,13 +9,17 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 // This is the police interface from where a police officer can lodge the credentials of a missing child.
 class PoliceUpload extends StatefulWidget {
+  const PoliceUpload({Key key}) : super(key: key);
+
+  @override
+  // ignore: library_private_types_in_public_api
   _PoliceUploadState createState() => _PoliceUploadState();
 }
 
 class _PoliceUploadState extends State<PoliceUpload> {
   // Properties related to submission of the form.
   var _isLoading = false;
-  var _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   var _parentEmail = '';
   var _policeEmail = '';
   var _parentPhone = '';
@@ -38,7 +43,7 @@ class _PoliceUploadState extends State<PoliceUpload> {
       final ref = FirebaseStorage.instance
           .ref()
           .child('missing_child')
-          .child(parentEmail + '.jpg');
+          .child('$parentEmail.jpg');
       await ref.putFile(_storedImage).onComplete;
       final url = await ref.getDownloadURL();
       await Firestore.instance
@@ -55,6 +60,7 @@ class _PoliceUploadState extends State<PoliceUpload> {
       setState(() {
         _isLoading = false;
       });
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.green[200],
           content: const Text('Missing Child registered successfully!')));
@@ -71,6 +77,7 @@ class _PoliceUploadState extends State<PoliceUpload> {
         backgroundColor: Colors.red[400],
       ));
     } catch (err) {
+      // ignore: avoid_print
       print(err);
       setState(() {
         _isLoading = false;
@@ -85,7 +92,7 @@ class _PoliceUploadState extends State<PoliceUpload> {
 
   // This method validates the entries made and checks for any potential error.
   void _submitLostChildData() {
-    final _isValid = _formKey.currentState.validate();
+    final isValid = _formKey.currentState.validate();
     if (_storedImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Please upload the image of lost child'),
@@ -93,7 +100,7 @@ class _PoliceUploadState extends State<PoliceUpload> {
       ));
       return;
     }
-    if (_isValid) {
+    if (isValid) {
       _formKey.currentState.save();
       _finalValidDataOfLostChild(_childName, _parentEmail, _policeEmail,
           _parentAddress, _parentPhone, _storedImage);
@@ -110,6 +117,7 @@ class _PoliceUploadState extends State<PoliceUpload> {
   }
 
   // The main build function of the current StatefulWidget class.
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -164,7 +172,7 @@ class _PoliceUploadState extends State<PoliceUpload> {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Container(
+                                SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width * 0.4,
                                     child: TextFormField(
@@ -203,7 +211,7 @@ class _PoliceUploadState extends State<PoliceUpload> {
                                                 horizontal: 10),
                                       ),
                                     )),
-                                Container(
+                                SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width * 0.4,
                                     child: TextFormField(
